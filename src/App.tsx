@@ -1,13 +1,14 @@
+// App.tsx
+import React from 'react';
+import MyComponent from './components/MyComponent';
 
-
-function App() {
+const App: React.FC = () => {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline text-violet-500">
-      Hello world!
-    </h1>
-    </>
-  )
-}
+    <div>
+      <h1>Hello from App!</h1>
+      <MyComponent message="Welcome to TypeScript + React!" />
+    </div>
+  );
+};
 
-export default App
+export default App;
