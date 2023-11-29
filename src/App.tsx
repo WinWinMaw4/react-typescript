@@ -1,13 +1,15 @@
 // App.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import MyComponent from './components/MyComponent';
 
 const App: React.FC = () => {
+  const [messages, setMessages] = useState<string[]>([]);
+
   return (
     <div>
       <h1>Hello from App!</h1>
-      <MyComponent message="Welcome to TypeScript + React!" />
-    </div>
+      <MyComponent messages={messages} setMessages={setMessages} />
+    </div>                                    
   );
 };
 
