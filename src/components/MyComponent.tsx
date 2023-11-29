@@ -1,5 +1,6 @@
 // MyComponent.tsx
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 interface MyComponentProps {
   apiUrl: string;
@@ -29,6 +30,7 @@ const MyComponent: React.FC<MyComponentProps> = ({ apiUrl }) => {
 
   return (
     <div className="bg-gray-200 p-4 rounded-md shadow-md">
+         
       <ul>
         {data.map((post) => (
           <li key={post.id} className="text-lg mb-2">
