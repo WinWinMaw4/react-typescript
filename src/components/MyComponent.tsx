@@ -1,6 +1,8 @@
 // MyComponent.tsx
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { addPost, selectPosts } from '../redux/postsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 interface MyComponentProps {
   apiUrl: string;
@@ -12,23 +14,26 @@ interface Post {
 }
 
 const MyComponent: React.FC<MyComponentProps> = ({ apiUrl }) => {
+  const dispatch = useDispatch();
+  const posts = useSelector(selectPosts);
+
   const [data, setData] = useState<Post[]>([]);
   const [newPostTitle, setNewPostTitle] = useState('');
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(apiUrl);
-        const result = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(apiUrl);
+  //       const result = await response.json();
+  //       setData(result);
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [apiUrl]);
+  //   fetchData();
+  // }, [apiUrl]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -45,7 +50,9 @@ const MyComponent: React.FC<MyComponentProps> = ({ apiUrl }) => {
       if (response.ok) {
         // Reload data after successful submission
         // You may choose to use state management libraries for a more elegant solution
-        window.location.reload();
+        // window.location.reload();
+        dispatch(addPost({id: Date.now(), title: newPostTitle}));
+        setNewPostTitle('');
       } else {
         console.error('Failed to add new post');
       }
@@ -75,7 +82,7 @@ const MyComponent: React.FC<MyComponentProps> = ({ apiUrl }) => {
         </div>
       </form>
       <ul>
-        {data.map((post) => (
+        {posts.map((post) => (
           <li key={post.id} className="text-lg mb-2">
             {post.title}
           </li>
